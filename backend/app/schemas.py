@@ -78,3 +78,74 @@ class Stats(BaseModel):
     new_this_week: int
     reviewed: int
     pending: int
+
+
+# ---------- Service Schemas ----------
+
+class ServiceCreate(BaseModel):
+    title: str = Field(..., max_length=255)
+    description: Optional[str] = None
+    icon: Optional[str] = Field(default=None, max_length=50)
+    image: Optional[str] = Field(default=None, max_length=255)
+    color: Optional[str] = Field(default=None, max_length=50)
+    display_order: int = 0
+    items: Optional[list | dict] = None
+
+class ServiceUpdate(ServiceCreate):
+    pass
+
+class ServiceOut(ServiceCreate):
+    id: int
+
+    class Config:
+        from_attributes = True
+
+
+# ---------- University Schemas ----------
+
+class UniversityCreate(BaseModel):
+    id: str = Field(..., max_length=150)
+    name: str = Field(..., max_length=255)
+    category: Optional[str] = Field(default=None, max_length=100)
+    location: Optional[str] = Field(default=None, max_length=255)
+    state: Optional[str] = Field(default=None, max_length=50)
+    type: Optional[str] = Field(default=None, max_length=100)
+    established: Optional[str] = Field(default=None, max_length=20)
+    ranking: Optional[str] = Field(default=None, max_length=255)
+    global_rank: Optional[str] = Field(default=None, max_length=255)
+    acceptance_rate: Optional[str] = Field(default=None, max_length=50)
+    image: Optional[str] = Field(default=None, max_length=255)
+    badge: Optional[str] = Field(default=None, max_length=100)
+    overview: Optional[str] = None
+    
+    courses: Optional[list | dict] = None
+    fees: Optional[dict] = None
+    timeline: Optional[list | dict] = None
+    rules: Optional[dict] = None
+    regulations: Optional[dict] = None
+    campus_life: Optional[dict] = None
+
+class UniversityUpdate(BaseModel):
+    name: Optional[str] = Field(default=None, max_length=255)
+    category: Optional[str] = Field(default=None, max_length=100)
+    location: Optional[str] = Field(default=None, max_length=255)
+    state: Optional[str] = Field(default=None, max_length=50)
+    type: Optional[str] = Field(default=None, max_length=100)
+    established: Optional[str] = Field(default=None, max_length=20)
+    ranking: Optional[str] = Field(default=None, max_length=255)
+    global_rank: Optional[str] = Field(default=None, max_length=255)
+    acceptance_rate: Optional[str] = Field(default=None, max_length=50)
+    image: Optional[str] = Field(default=None, max_length=255)
+    badge: Optional[str] = Field(default=None, max_length=100)
+    overview: Optional[str] = None
+    
+    courses: Optional[list | dict] = None
+    fees: Optional[dict] = None
+    timeline: Optional[list | dict] = None
+    rules: Optional[dict] = None
+    regulations: Optional[dict] = None
+    campus_life: Optional[dict] = None
+
+class UniversityOut(UniversityCreate):
+    class Config:
+        from_attributes = True

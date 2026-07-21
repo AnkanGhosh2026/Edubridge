@@ -76,3 +76,19 @@
   font-size: 0.85rem;
   font-weight: 600;
 }
+
+.admin-login__creds {
+  display: flex;
+  gap: 16px;
+  background: rgba(46, 196, 232, 0.08);
+  border: 1px dashed var(--sky);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.admin-login__creds strong {
+  color: var(--navy);
+  font-family: var(--font-mono, monospace);
+}

@@ -1,9 +1,12 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import PageHero from "../components/PageHero";
 import UniversityModal from "../components/UniversityModal";
-import { UNIVERSITIES, CATEGORIES, DEFAULT_FALLBACK_IMAGE } from "../data/universitiesData";
+import { getUniversities } from "../api";
+import { FALLBACK_UNIVERSITIES } from "../data/fallbackData";
 import "./StudyUSA.css";
+
+const DEFAULT_FALLBACK_IMAGE = "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1000&q=80";
 
 const reasons = [
   { title: "4,000+ accredited institutions", text: "From Ivy League research universities to affordable community colleges." },
@@ -52,18 +55,32 @@ export default function StudyUSA() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedUni, setSelectedUni] = useState(null);
+  
+  const [universities, setUniversities] = useState(FALLBACK_UNIVERSITIES);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getUniversities().then(data => {
+      if (data && data.length > 0) setUniversities(data);
+    }).catch(() => {}).finally(() => setLoading(false));
+  }, []);
+
+  const CATEGORIES = useMemo(() => {
+    const cats = new Set(universities.map(u => u.category).filter(Boolean));
+    return ["All", ...cats];
+  }, [universities]);
 
   const filteredUniversities = useMemo(() => {
-    return UNIVERSITIES.filter((uni) => {
+    return universities.filter((uni) => {
       const matchesCategory =
         activeCategory === "All" || uni.category === activeCategory;
       const matchesSearch =
         uni.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        uni.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        uni.badge.toLowerCase().includes(searchQuery.toLowerCase());
+        (uni.location && uni.location.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (uni.badge && uni.badge.toLowerCase().includes(searchQuery.toLowerCase()));
       return matchesCategory && matchesSearch;
     });
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory, searchQuery, universities]);
 
   return (
     <>

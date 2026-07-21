@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { DEFAULT_FALLBACK_IMAGE } from "../data/universitiesData";
+const DEFAULT_FALLBACK_IMAGE = "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1000&q=80";
 import "./UniversityModal.css";
 
 export default function UniversityModal({ university, onClose }) {

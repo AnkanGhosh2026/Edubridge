@@ -48,3 +48,29 @@ export const updateSubmission = (id, isReviewed, token) =>
 
 export const deleteSubmission = (id, token) =>
   request(`/api/admin/submissions/${id}`, { method: "DELETE", token });
+
+// Services API
+export const getServices = () => request("/api/services");
+
+export const createService = (payload, token) =>
+  request("/api/admin/services", { method: "POST", body: payload, token });
+
+export const updateService = (id, payload, token) =>
+  request(`/api/admin/services/${id}`, { method: "PUT", body: payload, token });
+
+export const deleteService = (id, token) =>
+  request(`/api/admin/services/${id}`, { method: "DELETE", token });
+
+// Universities API
+export const getUniversities = () => request("/api/universities");
+
+export const getUniversity = (slug) => request(`/api/universities/${slug}`);
+
+export const createUniversity = (payload, token) =>
+  request("/api/admin/universities", { method: "POST", body: payload, token });
+
+export const updateUniversity = (slug, payload, token) =>
+  request(`/api/admin/universities/${slug}`, { method: "PUT", body: payload, token });
+
+export const deleteUniversity = (slug, token) =>
+  request(`/api/admin/universities/${slug}`, { method: "DELETE", token });

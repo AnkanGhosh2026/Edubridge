@@ -25,14 +25,11 @@ const whyUs = [
   },
 ];
 
-const services = [
-  { icon: "🎓", title: "University shortlisting", text: "Profile-matched lists across reach, match, and safety schools." },
-  { icon: "📝", title: "Application & SOP help", text: "Essays, LORs, and applications reviewed line by line." },
-  { icon: "💰", title: "Scholarships & loans", text: "Merit aid search plus tie-ups with education loan lenders." },
-  { icon: "🗣️", title: "Test prep guidance", text: "Structured IELTS, TOEFL, GRE and GMAT preparation plans." },
-  { icon: "🛂", title: "F-1 visa coaching", text: "Document checklists and mock interviews with past officers." },
-  { icon: "🏠", title: "Pre-departure briefing", text: "Housing, banking, insurance, and campus-life orientation." },
-];
+import { useState, useEffect } from "react";
+import { getServices } from "../api";
+import { FALLBACK_SERVICES } from "../data/fallbackData";
+
+const FALLBACK_HOME_SERVICES = FALLBACK_SERVICES.reduce((acc, g) => [...acc, ...(g.items || [])], []).slice(0, 6);
 
 const stats = [
   { value: "12,400+", label: "students placed since 2015" },
@@ -42,6 +39,16 @@ const stats = [
 ];
 
 export default function Home() {
+  const [services, setServices] = useState(FALLBACK_HOME_SERVICES);
+  
+  useEffect(() => {
+    getServices().then(data => {
+      if (data && data.length > 0) {
+        const allItems = data.reduce((acc, group) => [...acc, ...(group.items || [])], []);
+        setServices(allItems.slice(0, 6));
+      }
+    }).catch(() => {});
+  }, []);
   return (
     <>
       {/* HERO */}

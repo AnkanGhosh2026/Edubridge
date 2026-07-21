@@ -38,6 +38,10 @@ export default function AdminLogin() {
         <span className="tag-stamp admin-login__stamp">Staff only</span>
         <h1>EduBridge Admin</h1>
         <p>Sign in to view and manage enquiry submissions.</p>
+        <div className="admin-login__creds">
+          <span>Username: <strong>admin</strong></span>
+          <span>Password: <strong>123456</strong></span>
+        </div>
 
         <label>
           Username

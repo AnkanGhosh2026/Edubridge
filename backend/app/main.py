@@ -194,3 +194,117 @@ def get_stats(
         "reviewed": reviewed,
         "pending": total - reviewed,
     }
+
+
+# ---------- Public Service & University routes ----------
+
+@app.get("/api/services", response_model=list[schemas.ServiceOut])
+def get_services(db: Session = Depends(get_db)):
+    return db.query(models.Service).order_by(models.Service.display_order.asc()).all()
+
+@app.get("/api/universities", response_model=list[schemas.UniversityOut])
+def get_universities(db: Session = Depends(get_db)):
+    return db.query(models.University).all()
+
+@app.get("/api/universities/{slug}", response_model=schemas.UniversityOut)
+def get_university(slug: str, db: Session = Depends(get_db)):
+    uni = db.query(models.University).filter(models.University.id == slug).first()
+    if not uni:
+        raise HTTPException(status_code=404, detail="University not found")
+    return uni
+
+
+# ---------- Admin Service routes ----------
+
+@app.post("/api/admin/services", response_model=schemas.ServiceOut, status_code=201)
+def create_service(
+    payload: schemas.ServiceCreate,
+    db: Session = Depends(get_db),
+    current_admin: str = Depends(auth.get_current_admin),
+):
+    service = models.Service(**payload.model_dump())
+    db.add(service)
+    db.commit()
+    db.refresh(service)
+    return service
+
+@app.put("/api/admin/services/{service_id}", response_model=schemas.ServiceOut)
+def update_service(
+    service_id: int,
+    payload: schemas.ServiceUpdate,
+    db: Session = Depends(get_db),
+    current_admin: str = Depends(auth.get_current_admin),
+):
+    service = db.query(models.Service).filter(models.Service.id == service_id).first()
+    if not service:
+        raise HTTPException(status_code=404, detail="Service not found")
+    
+    for key, value in payload.model_dump().items():
+        setattr(service, key, value)
+    
+    db.commit()
+    db.refresh(service)
+    return service
+
+@app.delete("/api/admin/services/{service_id}", status_code=204)
+def delete_service(
+    service_id: int,
+    db: Session = Depends(get_db),
+    current_admin: str = Depends(auth.get_current_admin),
+):
+    service = db.query(models.Service).filter(models.Service.id == service_id).first()
+    if not service:
+        raise HTTPException(status_code=404, detail="Service not found")
+    db.delete(service)
+    db.commit()
+    return None
+
+
+# ---------- Admin University routes ----------
+
+@app.post("/api/admin/universities", response_model=schemas.UniversityOut, status_code=201)
+def create_university(
+    payload: schemas.UniversityCreate,
+    db: Session = Depends(get_db),
+    current_admin: str = Depends(auth.get_current_admin),
+):
+    existing = db.query(models.University).filter(models.University.id == payload.id).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="University with this ID already exists")
+        
+    uni = models.University(**payload.model_dump())
+    db.add(uni)
+    db.commit()
+    db.refresh(uni)
+    return uni
+
+@app.put("/api/admin/universities/{slug}", response_model=schemas.UniversityOut)
+def update_university(
+    slug: str,
+    payload: schemas.UniversityUpdate,
+    db: Session = Depends(get_db),
+    current_admin: str = Depends(auth.get_current_admin),
+):
+    uni = db.query(models.University).filter(models.University.id == slug).first()
+    if not uni:
+        raise HTTPException(status_code=404, detail="University not found")
+        
+    for key, value in payload.model_dump(exclude_unset=True).items():
+        setattr(uni, key, value)
+        
+    db.commit()
+    db.refresh(uni)
+    return uni
+
+@app.delete("/api/admin/universities/{slug}", status_code=204)
+def delete_university(
+    slug: str,
+    db: Session = Depends(get_db),
+    current_admin: str = Depends(auth.get_current_admin),
+):
+    uni = db.query(models.University).filter(models.University.id == slug).first()
+    if not uni:
+        raise HTTPException(status_code=404, detail="University not found")
+    db.delete(uni)
+    db.commit()
+    return None
