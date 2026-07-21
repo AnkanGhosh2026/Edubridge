@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback } from "rea
 
 const UserAuthContext = createContext(null);
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_BASE = import.meta.env.VITE_API_URL || "https://edubridge-63uu.onrender.com";
 
 export function UserAuthProvider({ children }) {
   const [token, setToken] = useState(() => localStorage.getItem("eb_user_token"));
