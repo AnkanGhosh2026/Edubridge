@@ -12,7 +12,7 @@ from .database import get_db
 from . import models
 
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin")
-ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "change-this-password")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "123456")
 JWT_SECRET = os.getenv("JWT_SECRET", "change-this-to-a-long-random-secret")
 JWT_ALGORITHM = "HS256"
 TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
