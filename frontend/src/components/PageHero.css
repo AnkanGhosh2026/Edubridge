@@ -1,0 +1,45 @@
+.page-hero {
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
+  padding: 76px 0 88px;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  top: -80px;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(46, 196, 232, 0.25), transparent 70%);
+}
+
+.page-hero__inner {
+  position: relative;
+  max-width: 680px;
+}
+
+.page-hero__eyebrow {
+  color: var(--sky);
+  margin-bottom: 18px;
+}
+
+.page-hero h1 {
+  color: var(--cream);
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.page-hero p {
+  color: rgba(255, 248, 238, 0.7);
+  font-size: 1.05rem;
+  max-width: 560px;
+}
+
+.page-hero__stamp {
+  color: var(--marigold);
+  margin-top: 22px;
+}
