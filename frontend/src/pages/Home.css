@@ -53,9 +53,9 @@
 }
 
 .hero__chips {
-  display: flex;
-  gap: 28px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 20px 24px;
 }
 
 .hero__chip {

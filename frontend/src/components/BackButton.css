@@ -1,0 +1,55 @@
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--cream, #fff8ee);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  margin-bottom: 20px;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  transform: translateX(-4px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.back-btn:active {
+  transform: translateX(-2px) scale(0.98);
+}
+
+.back-btn__icon {
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.back-btn:hover .back-btn__icon {
+  transform: translateX(-3px);
+}
+
+/* Light background variant */
+.back-btn--light {
+  background: rgba(22, 33, 62, 0.06);
+  border: 1px solid rgba(22, 33, 62, 0.15);
+  color: var(--navy, #16213e);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.back-btn--light:hover {
+  background: rgba(22, 33, 62, 0.12);
+  border-color: rgba(22, 33, 62, 0.3);
+  color: var(--navy-deep, #0f172a);
+}

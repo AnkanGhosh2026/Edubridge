@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { adminLogin } from "../../api";
 import { useAdminAuth } from "../../context/AdminAuthContext";
+import BackButton from "../../components/BackButton";
 import "./AdminLogin.css";
 
 export default function AdminLogin() {
@@ -31,7 +32,9 @@ export default function AdminLogin() {
 
   return (
     <div className="admin-login">
-      <form className="admin-login__card" onSubmit={handleSubmit}>
+      <div className="admin-login__wrapper">
+        <BackButton fallbackPath="/" />
+        <form className="admin-login__card" onSubmit={handleSubmit}>
         <span className="tag-stamp admin-login__stamp">Staff only</span>
         <h1>EduBridge Admin</h1>
         <p>Sign in to view and manage enquiry submissions.</p>
@@ -63,5 +66,6 @@ export default function AdminLogin() {
         </button>
       </form>
     </div>
-  );
+  </div>
+);
 }

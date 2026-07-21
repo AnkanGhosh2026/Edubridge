@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Navigate } from "react-router-dom";
 import { getSubmissions, getStats, updateSubmission, deleteSubmission } from "../../api";
 import { useAdminAuth } from "../../context/AdminAuthContext";
+import BackButton from "../../components/BackButton";
 import "./AdminDashboard.css";
 
 const FILTERS = [
@@ -85,6 +86,7 @@ export default function AdminDashboard() {
       <header className="admin-dash__header">
         <div className="container admin-dash__header-inner">
           <div>
+            <BackButton fallbackPath="/" />
             <span className="tag-stamp admin-dash__stamp">Admin dashboard</span>
             <h1>Enquiry submissions</h1>
           </div>

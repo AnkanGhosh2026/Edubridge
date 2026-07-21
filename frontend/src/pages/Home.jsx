@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import BackButton from "../components/BackButton";
 import "./Home.css";
 
 const whyUs = [
@@ -47,6 +48,7 @@ export default function Home() {
       <section className="hero">
         <div className="container hero__inner">
           <div className="hero__copy">
+            <BackButton variant="light" />
             <span className="eyebrow hero__eyebrow">
               <span className="hero__eyebrow-dot" /> Admissions open for Fall 2027 intake
             </span>
